@@ -1,10 +1,10 @@
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import { rootReducer } from "./root-reducer";
-import { translationMiddleware } from "./middleware";
+import { translationMiddleware } from "@mihanizm56/i18n-react";
 import { fetchLanguageKeysRequest } from "../../services/api/requests/fetch-language-keys";
 
-const LANG_URL = "http://127.0.0.1:8080/translation";
+const LANG_URL = "http://127.0.0.1:5000/translations";
 
 export const createAppStore = () => {
   const composeMiddlewares = [

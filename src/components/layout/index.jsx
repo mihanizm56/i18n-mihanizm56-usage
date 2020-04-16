@@ -1,20 +1,29 @@
-import React, { memo } from "react";
-import { TranslationHOC } from "../../hocs/translation-hoc";
-import { Card } from "../card";
-import { useEffect } from "react";
+import React, { memo, useEffect } from "react";
+import { fetchLangAction } from "@mihanizm56/i18n-react";
+import { connect } from "react-redux";
+import { CardRenderProps } from "../card-render-props";
+import { CardHOC } from "../card-hoc";
+import { CardWithComponent } from "../card-with-component";
 
-const TranslatedLayout = memo(({ changeLocale }) => {
+const WrappedLayout = memo(({ setLang }) => {
   useEffect(() => {
-    changeLocale("ru");
-  }, []); // eslint-disable-line
+    console.log("Layout rerenders");
+
+    setLang("ru");
+  }); // eslint-disable-line
 
   return (
     <div>
-      <Card />
-      <button onClick={() => changeLocale("en")}>Update lang to en</button>
-      <button onClick={() => changeLocale("ru")}>Update lang to ru</button>
+      <CardRenderProps />
+      <CardHOC />
+      <CardWithComponent />
+
+      <button onClick={() => setLang("en")}>Update lang to en</button>
+      <button onClick={() => setLang("ru")}>Update lang to ru</button>
     </div>
   );
 });
 
-export const Layout = TranslationHOC(TranslatedLayout);
+export const Layout = connect(null, { setLang: fetchLangAction })(
+  WrappedLayout
+);
