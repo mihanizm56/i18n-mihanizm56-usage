@@ -1,10 +1,20 @@
-import { fetchLanguageKeysRequest } from "../../../services/api/requests/fetch-language-keys";
 import { setLangAction } from "./actions";
 
-export const fetchDictionaryAction = async ({ dispatch, lang, url }) => {
-  const { data } = await fetchLanguageKeysRequest({ lang, url });
+export const fetchDictionaryAction = async ({
+  dispatch,
+  lang,
+  url,
+  request,
+}) => {
+  try {
+    const { data, error, errorText } = await request({ lang, url });
 
-  //   console.log("dictionary", data);
+    if (error) {
+      throw new Error(errorText);
+    }
 
-  dispatch(setLangAction(data));
+    dispatch(setLangAction(data));
+  } catch (error) {
+    console.error("error when fetch new dict", error);
+  }
 };
